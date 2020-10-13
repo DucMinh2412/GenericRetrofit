@@ -1,0 +1,3 @@
+include ':app:RetrofitPro'
+include ':app'
+rootProject.name = "GenericPro"
