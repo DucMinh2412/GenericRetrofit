@@ -23,7 +23,7 @@ public class GenericRetrofit {
             public void onResponse(Call<T> call, Response<T> response) {
                 String jsonString = response.body().toString();
                 Type listType = new TypeToken<List<T>>() {}.getType();
-                list.addAll(new Gson().fromJson(jsonString, listType));
+                 list.addAll(new Gson().fromJson(jsonString, listType));
             }
 
             @Override
