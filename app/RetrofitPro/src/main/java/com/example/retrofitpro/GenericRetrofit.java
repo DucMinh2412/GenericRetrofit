@@ -17,7 +17,7 @@ import retrofit2.Retrofit;
 
 public class GenericRetrofit {
 
-    public static <T> void callRetrofitArray(String link, String request, List<T> list) {
+    public static <T extends Object> void callRetrofitArray(String link, String request, List<T> list) {
         Retrofit restRetrofit = RestRetrofit.getInstance(link);
         RetrofitService retrofitService = restRetrofit.create(RetrofitService.class);
         retrofitService.getArray(request).enqueue(new Callback<JsonArray>() {
@@ -26,6 +26,7 @@ public class GenericRetrofit {
                 String jsonString = response.body().toString();
                 Type listType = new TypeToken<List<T>>() {}.getType();
                 list.addAll(new Gson().fromJson(jsonString, listType));
+                Log.e("Success","Success");
             }
 
             @Override
