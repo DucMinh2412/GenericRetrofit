@@ -23,13 +23,14 @@ public class GenericRetrofit<T>{
     String request;
     Activity activity;
     List<T> list;
-    Type listType = new TypeToken<List<T>>() {}.getType();
+    Type listType;
 
-    public GenericRetrofit(String link, String request, Activity activity, List<T> list) {
+    public GenericRetrofit(String link, String request, Activity activity, List<T> list, Type listType) {
         this.link = link;
         this.request = request;
         this.activity = activity;
         this.list = list;
+        this.listType = listType;
     }
 
     public void GetDataJsonArray() {
