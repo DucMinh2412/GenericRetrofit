@@ -10,6 +10,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,10 +23,10 @@ public class GenericRetrofit<T>{
     String link;
     String request;
     Activity activity;
-    List<T> list;
+    ArrayList<T> list;
     Type listType;
 
-    public GenericRetrofit(String link, String request, Activity activity, List<T> list, Type listType) {
+    public GenericRetrofit(String link, String request, Activity activity, ArrayList<T> list, Type listType) {
         this.link = link;
         this.request = request;
         this.activity = activity;
