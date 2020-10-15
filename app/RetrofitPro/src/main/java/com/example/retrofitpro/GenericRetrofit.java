@@ -57,7 +57,7 @@ public class GenericRetrofit<T>{
         editor.commit();
     }
 
-    public void GetData(){
+    public <T> void GetData(){
         SharedPreferences prefs = activity.getSharedPreferences("MY_SHARE.f", Context.MODE_PRIVATE);
         String JsonString = prefs.getString("JsonString",null);
         Type listType = new TypeToken<List<T>>() {}.getType();
