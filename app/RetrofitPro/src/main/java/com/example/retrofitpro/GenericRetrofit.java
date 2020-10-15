@@ -23,6 +23,7 @@ public class GenericRetrofit<T>{
     String request;
     Activity activity;
     List<T> list;
+    Type listType = new TypeToken<List<T>>() {}.getType();
 
     public GenericRetrofit(String link, String request, Activity activity, List<T> list) {
         this.link = link;
@@ -57,10 +58,9 @@ public class GenericRetrofit<T>{
         editor.commit();
     }
 
-    public <T> void GetData(){
+    public void GetData(){
         SharedPreferences prefs = activity.getSharedPreferences("MY_SHARE.f", Context.MODE_PRIVATE);
         String JsonString = prefs.getString("JsonString",null);
-        Type listType = new TypeToken<List<T>>() {}.getType();
         list.addAll(new Gson().fromJson(JsonString,listType));
     }
 }
