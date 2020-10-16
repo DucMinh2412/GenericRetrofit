@@ -19,50 +19,35 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class GenericRetrofit<T>{
+public class GenericRetrofit<T> {
     String link;
     String request;
-    Activity activity;
-    ArrayList<T> list;
-    Type listType;
+    List<T> list;
 
-    public GenericRetrofit(String link, String request, Activity activity, ArrayList<T> list, Type listType) {
+    public GenericRetrofit(String link, String request, List<T> list) {
         this.link = link;
         this.request = request;
-        this.activity = activity;
         this.list = list;
-        this.listType = listType;
     }
 
-    public void GetDataJsonArray() {
+    public void GetData() {
         Retrofit restRetrofit = RestRetrofit.getInstance(link);
         RetrofitService retrofitService = restRetrofit.create(RetrofitService.class);
-        retrofitService.getArray(request).enqueue(new Callback<JsonArray>() {
+        Call<JsonArray> call = retrofitService.getArray(request);
+        call.enqueue(new Callback<JsonArray>() {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
-                if(response.isSuccessful()) {
-                    String jsonString = response.body().toString();
-                    SaveData(jsonString);
-                }
+                String jsonString = response.body().toString();
+                Type listType = new TypeToken<List<T>>() {}.getType();
+                list.clear();
+                list.addAll(new Gson().fromJson(jsonString, listType));
             }
 
             @Override
             public void onFailure(Call<JsonArray> call, Throwable t) {
-                Log.e("Error","Error " + t);
+                Log.e("Error",t + " ");
             }
         });
-    }
 
-    private void SaveData(String JsonString){
-        SharedPreferences sharedPreferences = activity.getSharedPreferences("MY_SHARE.f", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("JsonString", JsonString);
-        editor.commit();
-    }
-
-    public void GetData(){
-        SharedPreferences prefs = activity.getSharedPreferences("MY_SHARE.f", Context.MODE_PRIVATE);
-        String JsonString = prefs.getString("JsonString",null);
-        list.addAll(new Gson().fromJson(JsonString,listType));
     }
 }
